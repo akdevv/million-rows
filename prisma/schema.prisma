@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Dataset {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  totalRows   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  headers     String[]
+
+  @@map("datasets")
+}
+
+model Prime {
+  index Int    @id
+  prime BigInt @unique
+
+  @@map("primes")
+}
+
+model PlanetaryScans {
+  scan_id        String   @id
+  planet_name    String
+  surface_temp_k Int
+  life_span      LifeSpan
+
+  @@map("planetary_scans")
+}
+
+model CyberThreats {
+  report_id      String   @id
+  threat_type    String
+  severity       String
+  origin_country String
+  timestamp      DateTime
+
+  @@map("cyber_threats")
+}
+
+enum LifeSpan {
+  None
+  Microbial
+  Intelligent
+}

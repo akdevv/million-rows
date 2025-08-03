@@ -42,3 +42,5 @@ next-env.d.ts
 
 # Data files
 scripts/data
+
+/lib/generated/prisma
