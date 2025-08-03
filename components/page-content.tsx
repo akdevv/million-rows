@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import Search from "@/components/search";
 import DataTable from "@/components/data-table";
