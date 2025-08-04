@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { IoIosInformationCircleOutline } from "react-icons/io";
 import Search from "@/components/search";
-import DataTable from "@/components/data-table";
+import DataTable from "@/components/table/data-table";
 import { DatasetMetadata } from "@/lib/types/datasets";
 import DatasetSelector from "@/components/dataset-selector";
 

@@ -1,5 +1,3 @@
-"use client";
-
 export default function DataTable() {
   // Generate dummy data for demonstration
   const dummyData = Array.from({ length: 100 }, (_, i) => ({
