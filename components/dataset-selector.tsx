@@ -8,15 +8,15 @@ import {
 import { DatasetMetadata } from "@/lib/types/datasets";
 
 export default function DatasetSelector({
-	datasets,
+	datasetsMetadata,
 	selectedDataset,
 	handleDatasetChange,
 }: {
-	datasets: DatasetMetadata[];
+	datasetsMetadata: DatasetMetadata[];
 	selectedDataset: string;
 	handleDatasetChange: (value: string) => void;
 }) {
-	if (datasets.length === 0 || !selectedDataset) {
+	if (datasetsMetadata.length === 0 || !selectedDataset) {
 		return (
 			<div className="w-[220px] h-10 bg-muted animate-pulse rounded-md border py-5" />
 		);
@@ -28,7 +28,7 @@ export default function DatasetSelector({
 				<SelectValue placeholder="Select dataset" />
 			</SelectTrigger>
 			<SelectContent>
-				{datasets.map((dataset) => (
+				{datasetsMetadata.map((dataset) => (
 					<SelectItem key={dataset.id} value={dataset.id}>
 						{dataset.name}
 					</SelectItem>

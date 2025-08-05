@@ -24,7 +24,7 @@ const fetchDatasets = async () => {
 };
 
 export default function Home() {
-	const datasets: DatasetMetadata[] = use(fetchDatasets());
+	const datasetsMetadata: DatasetMetadata[] = use(fetchDatasets());
 
 	return (
 		<div className="min-h-screen">
@@ -38,7 +38,7 @@ export default function Home() {
 			</header>
 
 			<main className="container mx-auto px-4 py-6">
-				<PageContent datasets={datasets} />
+				<PageContent datasetsMetadata={datasetsMetadata} />
 			</main>
 		</div>
 	);

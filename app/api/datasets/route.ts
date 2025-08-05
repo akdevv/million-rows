@@ -11,6 +11,7 @@ export async function GET(): Promise<
 > {
 	try {
 		const datasets = await fetchDatasetsMetadata();
+		console.log(datasets);
 
 		return NextResponse.json({
 			success: true,
