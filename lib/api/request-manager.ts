@@ -53,20 +53,15 @@ export async function fetchDatasetData(
 	// Check cache first
 	const cached = cache[cacheKey];
 	if (cached && isCacheValid(cached.timestamp)) {
-		console.log(`✅ [CACHE HIT] ${cacheKey} - Returning cached data`);
 		return cached.data;
 	}
 
 	// Check if request is already pending
 	if (cacheKey in pendingRequests) {
-		console.log(`⏳ [PENDING] ${cacheKey} - Reusing existing request`);
 		return pendingRequests[cacheKey];
 	}
 
 	// Make new request
-	console.log(`🔄 [API REQUEST] ${cacheKey} - Making new request`);
-	console.log(`   Dataset: ${datasetId}`);
-	console.log(`   Page: ${page}, Limit: ${limit}`);
 	const requestPromise = makeApiRequest(datasetId, page, limit);
 	pendingRequests[cacheKey] = requestPromise;
 
@@ -78,18 +73,11 @@ export async function fetchDatasetData(
 			data: result,
 			timestamp: Date.now(),
 		};
-		
-		console.log(`✅ [REQUEST SUCCESS] ${cacheKey}`);
-		console.log(`   Total rows: ${result.pagination.total}`);
-		console.log(`   Has next: ${result.pagination.hasNext}`);
-		console.log(`   Data cached for ${CACHE_TTL / 1000} seconds`);
 
 		return result;
 	} catch (error) {
-		console.error(`❌ [REQUEST FAILED] ${cacheKey}:`, error);
 		throw error;
 	} finally {
 		delete pendingRequests[cacheKey];
-		console.log(`🔚 [CLEANUP] Removed pending request: ${cacheKey}`);
 	}
 }

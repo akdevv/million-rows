@@ -107,29 +107,6 @@ const TableBody = forwardRef<List, TableBodyProps>(
 	) => {
 
 		const itemCount = hasMore ? data.length + 1 : data.length;
-		
-		// // Better debugging
-		// console.group("📊 TableBody Render");
-		// console.log("Data Length:", data.length);
-		// console.log("Item Count:", itemCount);
-		// console.log("Has More:", hasMore);
-		// console.log("Is Loading More:", isLoadingMore);
-		
-		// if (data.length > 0) {
-		// 	console.log("Sample Data:");
-		// 	console.table([
-		// 		{ index: 0, exists: !!data[0], keys: data[0] ? Object.keys(data[0]).length : 0 },
-		// 		{ index: 15, exists: !!data[15], keys: data[15] ? Object.keys(data[15]).length : 0 },
-		// 		{ index: 100, exists: !!data[100], keys: data[100] ? Object.keys(data[100]).length : 0 },
-		// 		{ index: 999, exists: !!data[999], keys: data[999] ? Object.keys(data[999]).length : 0 }
-		// 	]);
-		// 	
-		// 	if (data[0]) {
-		// 		console.log("First item structure:", Object.keys(data[0]).slice(0, 5));
-		// 		console.log("Headers expected:", headers);
-		// 	}
-		// }
-		// console.groupEnd();
 
 		// Handle scroll with load more logic
 		const handleScroll = useCallback(

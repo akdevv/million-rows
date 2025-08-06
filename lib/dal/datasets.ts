@@ -37,9 +37,10 @@ export const findDatasetData = async (
 
 	const datasetKey = dataset.name.toLowerCase() as keyof typeof dataQueries;
 	const queryFn = dataQueries[datasetKey];
-	
-	if (!queryFn)
+
+	if (!queryFn) {
 		throw new Error(`No data handler found for dataset: ${dataset.name}`);
+	}
 
 	const data = await queryFn();
 
@@ -48,6 +49,6 @@ export const findDatasetData = async (
 		datasetName: dataset.name,
 		headers: dataset.headers,
 		data,
-		total: dataset.totalRows, // Use totalRows from dataset metadata
+		total: dataset.totalRows,
 	};
 };

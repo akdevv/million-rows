@@ -37,10 +37,6 @@ export const fetchDatasetData = async (
 
 		const totalPages = Math.ceil(serializedData.total / limit);
 
-		console.log(
-			`[Service] Total records: ${serializedData.total}, Total pages: ${totalPages}, Current page: ${page}`
-		);
-
 		return {
 			data: serializedData,
 			pagination: {

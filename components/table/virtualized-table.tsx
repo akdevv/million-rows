@@ -48,7 +48,7 @@ export default function VirtualizedTable({
 
 			try {
 				loadingRef.current = true; // Set loading ref immediately
-				
+
 				if (isInitial) {
 					setState((prev) => ({
 						...prev,
@@ -70,17 +70,10 @@ export default function VirtualizedTable({
 				);
 
 				const newData = result.data.data;
-				
-				console.log(`📦 [DATA LOADED] Page ${page}`);
-				console.log(`   New rows: ${newData.length}`);
-				console.log(`   Total: ${result.pagination.total}`);
-				console.log(`   Has next: ${result.pagination.hasNext}`);
-
 				setState((prev) => {
-					const updatedData = isInitial ? newData : [...prev.data, ...newData];
-					
-					console.log(`   State update: ${prev.data.length} → ${updatedData.length} rows`);
-					
+					const updatedData = isInitial
+						? newData
+						: [...prev.data, ...newData];
 					return {
 						...prev,
 						data: updatedData,
@@ -115,28 +108,14 @@ export default function VirtualizedTable({
 	);
 
 	const loadMore = useCallback(() => {
-		console.log("📊 [LOAD MORE] Triggered");
-		console.log(`   Current page: ${state.currentPage}`);
-		console.log(`   Has more: ${state.hasMore}`);
-		console.log(`   Is loading: ${state.isLoadingMore}`);
-		console.log(`   Loading ref: ${loadingRef.current}`);
-		console.log(`   Data length: ${state.data.length}`);
-		
 		if (state.hasMore && !state.isLoadingMore && !loadingRef.current) {
-			console.log(`   ✅ Loading page ${state.currentPage + 1}...`);
 			loadData(state.currentPage + 1);
-		} else {
-			console.log("   ❌ Load more conditions not met because:");
-			if (!state.hasMore) console.log("      - No more data (hasMore is false)");
-			if (state.isLoadingMore) console.log("      - Already loading (isLoadingMore is true)");
-			if (loadingRef.current) console.log("      - Loading ref is true");
 		}
 	}, [state.hasMore, state.isLoadingMore, state.currentPage, loadData]);
 
 	// Reset and load initial data when dataset changes
 	useEffect(() => {
 		if (selectedDatasetMetadata?.id) {
-			console.log("🚀 [INITIAL LOAD] Starting for dataset:", selectedDatasetMetadata.id);
 			setState({
 				data: [],
 				totalCount: 0,
@@ -196,7 +175,7 @@ export default function VirtualizedTable({
 			</div>
 
 			{/* Footer with stats */}
-			{/* <div className="flex items-center justify-between px-4 py-2 border-t bg-muted/20 text-sm text-muted-foreground">
+			<div className="flex items-center justify-between px-4 py-2 border-t bg-muted/20 text-sm text-muted-foreground">
 				<span>
 					{state.data.length.toLocaleString()} of{" "}
 					{state.totalCount.toLocaleString()} rows loaded
@@ -209,7 +188,7 @@ export default function VirtualizedTable({
 				{!state.hasMore && state.data.length > 0 && (
 					<span className="text-green-600">All data loaded</span>
 				)}
-			</div> */}
+			</div>
 		</div>
 	);
 }
