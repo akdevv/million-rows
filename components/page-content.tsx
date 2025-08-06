@@ -26,6 +26,7 @@ export default function PageContent({
 
 		setSelectedDataset(datasetToSelect);
 		localStorage.setItem("selectedDataset", datasetToSelect.id);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [datasetsMetadata]);
 
 	const handleDatasetChange = (id: string) => {
