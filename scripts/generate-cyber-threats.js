@@ -53,7 +53,7 @@ function saveToCSV(records, filename) {
 
 	for (let i = 0; i < records.length; i++) {
 		const record = records[i];
-		csvContent += `${record.reportId},"${record.threat_type}",${record.severity},${record.origin_country},${record.timestamp}\n`;
+		csvContent += `${record.reportId},"${record.threat_type}",${record.severity},"${record.origin_country}",${record.timestamp}\n`;
 
 		// Progress indicator for CSV conversion
 		if ((i + 1) % 5000 === 0) {

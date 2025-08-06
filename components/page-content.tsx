@@ -16,31 +16,24 @@ export default function PageContent({
 	const [selectedDataset, setSelectedDataset] =
 		useState<DatasetMetadata | null>(null);
 
-	useEffect(() => {
-		if (datasetsMetadata.length > 0) {
-			const cachedDataset = localStorage.getItem("selectedDataset");
-			const defaultDataset = datasetsMetadata[0];
+	const findDatasetById = (id: string) =>
+		datasetsMetadata.find((d) => d.id === id) || null;
 
-			if (
-				cachedDataset &&
-				datasetsMetadata.some((d) => d.id === cachedDataset)
-			) {
-				setSelectedDataset(
-					datasetsMetadata.find((d) => d.id === cachedDataset) || null
-				);
-			} else {
-				setSelectedDataset(defaultDataset);
-				localStorage.setItem("selectedDataset", defaultDataset.id);
-			}
-		}
+	useEffect(() => {
+		if (datasetsMetadata.length === 0) return;
+
+		const cachedId = localStorage.getItem("selectedDataset");
+		const cachedDataset = cachedId ? findDatasetById(cachedId) : null;
+		const datasetToSelect = cachedDataset || datasetsMetadata[0];
+
+		setSelectedDataset(datasetToSelect);
+		localStorage.setItem("selectedDataset", datasetToSelect.id);
 	}, [datasetsMetadata]);
 
-	// Cache selected dataset when it changes
-	const handleDatasetChange = (value: string) => {
-		setSelectedDataset(
-			datasetsMetadata.find((d) => d.id === value) || null
-		);
-		localStorage.setItem("selectedDataset", value);
+	const handleDatasetChange = (id: string) => {
+		const dataset = findDatasetById(id);
+		setSelectedDataset(dataset);
+		localStorage.setItem("selectedDataset", id);
 	};
 
 	return (
