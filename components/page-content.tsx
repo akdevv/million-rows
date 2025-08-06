@@ -26,7 +26,7 @@ export default function PageContent({
 
 		setSelectedDataset(datasetToSelect);
 		localStorage.setItem("selectedDataset", datasetToSelect.id);
-	}, [datasetsMetadata, findDatasetById]);
+	}, [datasetsMetadata]);
 
 	const handleDatasetChange = (id: string) => {
 		const dataset = findDatasetById(id);

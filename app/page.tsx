@@ -1,6 +1,7 @@
 import { use } from "react";
 import { DatasetMetadata } from "@/lib/types/datasets";
 import PageContent from "@/components/page-content";
+import ThemeToggle from "@/components/theme-toggle";
 
 const fetchDatasets = async () => {
 	try {
@@ -30,10 +31,15 @@ export default function Home() {
 		<div className="min-h-screen">
 			<header className="border-b">
 				<div className="container mx-auto px-4 py-6">
-					<h1 className="text-3xl font-bold">Million Rows</h1>
-					<p className="mt-2 text-muted-foreground">
-						Efficiently displaying and managing large datasets
-					</p>
+					<div className="flex items-center justify-between">
+						<div>
+							<h1 className="text-3xl font-bold">Million Rows</h1>
+							<p className="mt-2 text-muted-foreground">
+								Efficiently displaying and managing large datasets
+							</p>
+						</div>
+						<ThemeToggle />
+					</div>
 				</div>
 			</header>
 

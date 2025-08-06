@@ -5,7 +5,7 @@ import { FixedSizeList as List } from "react-window";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface TableBodyProps {
-	data: { [key: string]: any }[];
+	data: Record<string, unknown>[];
 	headers: string[];
 	totalCount: number;
 	isLoading: boolean;
@@ -20,7 +20,7 @@ interface RowProps {
 	index: number;
 	style: React.CSSProperties;
 	data: {
-		items: { [key: string]: any }[];
+		items: Record<string, unknown>[];
 		headers: string[];
 		hasMore: boolean;
 	};
@@ -82,7 +82,7 @@ const Row = memo(({ index, style, data: rowData }: RowProps) => {
 							idx < headers.length - 1 ? "border-r" : ""
 						}`}
 					>
-						{value}
+						{String(value)}
 					</div>
 				);
 			})}
@@ -98,7 +98,11 @@ const TableBody = forwardRef<List, TableBodyProps>(
 
 		// Handle scroll with load more logic
 		const handleScroll = useCallback(
-			(props: any) => {
+			(props: {
+				scrollOffset: number;
+				scrollDirection: "forward" | "backward";
+				scrollUpdateWasRequested: boolean;
+			}) => {
 				const {
 					scrollOffset,
 					scrollDirection,
@@ -145,5 +149,7 @@ const TableBody = forwardRef<List, TableBodyProps>(
 		);
 	}
 );
+
+TableBody.displayName = "TableBody";
 
 export default TableBody;

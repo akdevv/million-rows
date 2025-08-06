@@ -11,7 +11,7 @@ import TableHeader from "./table-header";
 import TableSkeleton from "./table-skeleton";
 
 interface TableState {
-	data: Record<string, any>[];
+	data: Record<string, unknown>[];
 	totalCount: number;
 	isInitialLoading: boolean;
 	isLoadingMore: boolean;

@@ -10,7 +10,7 @@ export type DatasetData = {
 	datasetId: string;
 	datasetName: string;
 	headers: string[];
-	data: Record<string, any>[];
+	data: Record<string, unknown>[];
 	total: number;
 };
 
