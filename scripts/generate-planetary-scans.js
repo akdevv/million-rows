@@ -120,7 +120,7 @@ function saveToCSV(batch, filepath, isFirstBatch) {
 	let csvContent = "";
 
 	if (isFirstBatch) {
-		csvContent += "scan_id,planet_name,surface_temp_K,life_signs\n";
+		csvContent += "scan_id,planet_name,surface_temp_k,life_signs\n";
 	}
 
 	for (let i = 0; i < batch.length; i++) {

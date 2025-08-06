@@ -28,10 +28,10 @@ model Prime {
 }
 
 model PlanetaryScans {
-  scan_id        String   @id
+  scan_id        String    @id
   planet_name    String
   surface_temp_k Int
-  life_span      LifeSpan
+  life_signs     LifeSigns
 
   @@map("planetary_scans")
 }
@@ -46,7 +46,7 @@ model CyberThreats {
   @@map("cyber_threats")
 }
 
-enum LifeSpan {
+enum LifeSigns {
   None
   Microbial
   Intelligent
