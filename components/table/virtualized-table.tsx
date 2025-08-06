@@ -2,7 +2,7 @@
 
 import { useState, useRef, useCallback, useEffect } from "react";
 import { FixedSizeList as List } from "react-window";
-import { DatasetData, DatasetMetadata } from "@/lib/types/datasets";
+import { DatasetMetadata } from "@/lib/types/datasets";
 import { fetchDatasetData } from "@/lib/api/request-manager";
 import { MdError } from "react-icons/md";
 
@@ -43,25 +43,17 @@ export default function VirtualizedTable({
 	const loadingRef = useRef(false);
 
 	const loadData = useCallback(
-		async (page: number, isInitial: boolean = false) => {
+		async (page: number, isInitial = false) => {
 			if (!selectedDatasetMetadata?.id || loadingRef.current) return;
 
 			try {
-				loadingRef.current = true; // Set loading ref immediately
+				loadingRef.current = true;
 
-				if (isInitial) {
-					setState((prev) => ({
-						...prev,
-						isInitialLoading: true,
-						error: null,
-					}));
-				} else {
-					setState((prev) => ({
-						...prev,
-						isLoadingMore: true,
-						error: null,
-					}));
-				}
+				setState((prev) => ({
+					...prev,
+					[isInitial ? "isInitialLoading" : "isLoadingMore"]: true,
+					error: null,
+				}));
 
 				const result = await fetchDatasetData(
 					selectedDatasetMetadata.id,
@@ -70,21 +62,16 @@ export default function VirtualizedTable({
 				);
 
 				const newData = result.data.data;
-				setState((prev) => {
-					const updatedData = isInitial
-						? newData
-						: [...prev.data, ...newData];
-					return {
-						...prev,
-						data: updatedData,
-						totalCount: result.pagination.total,
-						currentPage: page,
-						hasMore: result.pagination.hasNext,
-						isInitialLoading: false,
-						isLoadingMore: false,
-						error: null,
-					};
-				});
+				setState((prev) => ({
+					...prev,
+					data: isInitial ? newData : [...prev.data, ...newData],
+					totalCount: result.pagination.total,
+					currentPage: page,
+					hasMore: result.pagination.hasNext,
+					isInitialLoading: false,
+					isLoadingMore: false,
+					error: null,
+				}));
 			} catch (error) {
 				console.error("Error loading data:", error);
 				setState((prev) => ({
@@ -96,9 +83,8 @@ export default function VirtualizedTable({
 							? error.message
 							: "Failed to load data",
 				}));
-				loadingRef.current = false; // Reset on error
+				loadingRef.current = false;
 			} finally {
-				// Reset loading ref after a small delay to prevent double triggers
 				setTimeout(() => {
 					loadingRef.current = false;
 				}, 100);
@@ -113,7 +99,6 @@ export default function VirtualizedTable({
 		}
 	}, [state.hasMore, state.isLoadingMore, state.currentPage, loadData]);
 
-	// Reset and load initial data when dataset changes
 	useEffect(() => {
 		if (selectedDatasetMetadata?.id) {
 			setState({
@@ -125,7 +110,6 @@ export default function VirtualizedTable({
 				hasMore: true,
 				error: null,
 			});
-
 			loadData(1, true);
 		}
 	}, [selectedDatasetMetadata?.id, loadData]);
@@ -174,20 +158,15 @@ export default function VirtualizedTable({
 				/>
 			</div>
 
-			{/* Footer with stats */}
-			<div className="flex items-center justify-between px-4 py-2 border-t bg-muted/20 text-sm text-muted-foreground">
-				<span>
-					{state.data.length.toLocaleString()} of{" "}
-					{state.totalCount.toLocaleString()} rows loaded
-				</span>
-
-				{state.isLoadingMore && (
-					<span className="text-blue-600">Loading more...</span>
-				)}
-
-				{!state.hasMore && state.data.length > 0 && (
-					<span className="text-green-600">All data loaded</span>
-				)}
+			<div className="flex items-center justify-between px-4 py-2 border-t">
+				<div className="flex items-center gap-2">
+					<span className="text-sm font-medium">
+						{state.data.length.toLocaleString()}
+					</span>
+					<span className="text-sm text-muted-foreground">
+						of {state.totalCount.toLocaleString()} rows
+					</span>
+				</div>
 			</div>
 		</div>
 	);

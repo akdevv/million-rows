@@ -24,7 +24,7 @@ export default function DatasetSelector({
 
 	return (
 		<Select value={selectedDataset} onValueChange={handleDatasetChange}>
-			<SelectTrigger className="w-[220px] py-5">
+			<SelectTrigger className="w-[120px] md:w-[220px] py-5">
 				<SelectValue placeholder="Select dataset" />
 			</SelectTrigger>
 			<SelectContent>

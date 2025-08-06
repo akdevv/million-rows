@@ -1,8 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { IoIosInformationCircleOutline } from "react-icons/io";
-
 import Search from "@/components/search";
 import VirtualizedTable from "@/components/table/virtualized-table";
 import { DatasetMetadata } from "@/lib/types/datasets";
@@ -28,7 +26,7 @@ export default function PageContent({
 
 		setSelectedDataset(datasetToSelect);
 		localStorage.setItem("selectedDataset", datasetToSelect.id);
-	}, [datasetsMetadata]);
+	}, [datasetsMetadata, findDatasetById]);
 
 	const handleDatasetChange = (id: string) => {
 		const dataset = findDatasetById(id);
@@ -50,23 +48,7 @@ export default function PageContent({
 				/>
 			</div>
 
-			{/* <DataTable /> */}
-
 			<VirtualizedTable selectedDatasetMetadata={selectedDataset} />
-
-			{/* Dataset description */}
-			{selectedDataset && (
-				<div className="mt-4 text-xs text-muted-foreground/60 flex items-center gap-1">
-					<IoIosInformationCircleOutline className="h-3 w-3 flex-shrink-0" />
-					{selectedDataset.description && (
-						<p>
-							{selectedDataset.description}: (
-							{selectedDataset.totalRows.toLocaleString()} total
-							rows)
-						</p>
-					)}
-				</div>
-			)}
 		</>
 	);
 }
